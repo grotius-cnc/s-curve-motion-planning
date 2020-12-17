@@ -5,3 +5,4 @@ a short example how to calculate the s-curve for acceleration. pdf docs included
 
 Result of calculation main.cpp :
 ![results](https://user-images.githubusercontent.com/44880102/102443638-3a256a00-3ff5-11eb-96d7-e12dee30a22a.png)
+
