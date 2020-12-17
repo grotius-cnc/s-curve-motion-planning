@@ -4,8 +4,19 @@
 //http://www.et.byu.edu/~ered/ME537/Notes/Ch5.pdf
 //Ideal S-Curve
 
+void test();
+
 int main()
 {
+    test();
+    return 0;
+}
+
+void test(){
+
+    std::cout << "" << std::endl;
+    std::cout << "test ok" << std::endl;
+
     double T  = 4;      // Total Acc time.
     double t  = T/2;    // A period time, concave or convex.
     double ti = t;      // A period time, used for invert time at deacceleration.
@@ -24,17 +35,16 @@ int main()
     //! ----------------- ---- -- Concave period, figur 5.1. -- ---- ----------------------------
     //! up
 
-    Sa = Vo*t + Jm*(t*t*t)/6;
-
-    V = Vo + Jm*(t*t)/2;
-
-    A = Jm*t;
-
-    std::cout << "----- Results acc concave period -----"           << std::endl;
-    std::cout << "period   t     :" << t                            << std::endl;
-    std::cout << "distance S     :" << Sa                           << std::endl;
-    std::cout << "velocity V     :" << V                            << std::endl;
-    std::cout << "acceleration A :" << A                            << std::endl;
+    for(double t=0; t<=T/2; t+=0.5){
+        Sa = Vo*t + Jm*(t*t*t)/6;
+        V = Vo + Jm*(t*t)/2;
+        A = Jm*t;
+        std::cout << "----- Results acc concave period -----"           << std::endl;
+        std::cout << "period   t     :" << t                            << std::endl;
+        std::cout << "distance S     :" << Sa                           << std::endl;
+        std::cout << "velocity V     :" << V                            << std::endl;
+        std::cout << "acceleration A :" << A                            << std::endl;
+    }
 
     // Initialize Vh.
     Vh=V;
@@ -42,51 +52,18 @@ int main()
     //! ----------------- ---- -- Convex period, figur 5.1. -- ---- ----------------------------
     //! down
 
-    Sb = Vh*t + As*(t*t)/2 -Jm*(t*t*t)/6;
+    for(double t=0; t<=T/2; t+=0.5){
+        Sb = Vh*t + As*(t*t)/2 -Jm*(t*t*t)/6;
+        V = Vh + As*t -Jm*(t*t)/2;
+        A = As - (Jm*t);
+        std::cout << ""                                                 << std::endl;
+        std::cout << "---- Results acc convex period ----"              << std::endl;
+        std::cout << "period   t     :" << t                            << std::endl;
+        std::cout << "distance S     :" << Sb                           << std::endl;
+        std::cout << "velocity V     :" << V                            << std::endl;
+        std::cout << "acceleration A :" << A                            << std::endl;
+    }
 
-    V = Vh + As*t -Jm*(t*t)/2;
-
-    A = As - (Jm*t);
-
-    std::cout << ""                                                 << std::endl;
-    std::cout << "---- Results acc convex period ----"              << std::endl;
-    std::cout << "period   t     :" << t                            << std::endl;
-    std::cout << "distance S     :" << Sb                           << std::endl;
-    std::cout << "velocity V     :" << V                            << std::endl;
-    std::cout << "acceleration A :" << A                            << std::endl;
-
-    std::cout << " "                                                << std::endl;
-    std::cout << "---- Results acc S curve acceleration ----"           << std::endl;
-    std::cout << "Acceleration Time            : " << 2*t           << std::endl;
-    std::cout << "Concave + convex distance St : " << Sa+Sb         << std::endl;
-
-
-    //! ----------------- ---- -- Control calculation as lineair curve  -- ---- ----------------------------
-    //!
-
-    // Normal acceleraton time T
-    std::cout << ""<<std::endl;
-    std::cout << "---- Results normal lineair acceleration ----"    << std::endl;
-    std::cout << "Check Acceleration time T     : " << T            << std::endl;
-
-    // Normal distance formula : S=Ut+0.5 *A*t^2
-    St = (0*T) + (0.5*Ar) * (T*T);
-    std::cout << "Check acceleration distance S : "<< St            << std::endl;
-
-    // Normal velocity formula t=v/a
-    V = T * Ar;
-    std::cout << "Check velocity V              : "<< V             << std::endl;
-
-    // Normal acceleration A, Ar=A2/2, see comments above how to find Ar.
-    std::cout << "Check acceleration A          : "<< Ar            << std::endl;
-
-
-    // 
-    
-    // From here check the output for correctness !!
-    
-    // 
-    
     //! The DeAcceleration start here !!
     //! Try to mirror the acc into dcc.
     //! We mirror the time t.
@@ -97,34 +74,41 @@ int main()
     //! ----------------- ---- -- Convex period, figur 5.1. -- ---- ----------------------------
     //! down
 
-    Sb = Sb - Vh*(ti-t) + As*((ti-t)*(ti-t))/2 -Jm*((ti-t)*(ti-t)*(ti-t))/6;
-
-    V = Vh + As*(ti-t) -Jm*((ti-t)*(ti-t))/2;
-
-    A = -As - (Jm*(ti-t));
-
-    std::cout << ""                                                 << std::endl;
-    std::cout << "---- Results dcc convex period ----"              << std::endl;
-    std::cout << "period   t     :" << t                            << std::endl;
-    std::cout << "distance S     :" << Sb                           << std::endl;
-    std::cout << "velocity V     :" << V                            << std::endl;
-    std::cout << "acceleration A :" << A                            << std::endl;
+    double temp=Sb;
+    for(double t=0; t<=T/2; t+=0.5){
+        Sb = temp - ( Vh*(ti-t) + As*((ti-t)*(ti-t))/2 -Jm*((ti-t)*(ti-t)*(ti-t))/6 );
+        V = Vh + As*(ti-t) -Jm*((ti-t)*(ti-t))/2;
+        A = -abs(As - (Jm*(ti-t)));
+        std::cout << ""                                                 << std::endl;
+        std::cout << "---- Results dcc convex period ----"              << std::endl;
+        std::cout << "period   t     :" << t                            << std::endl;
+        std::cout << "distance S     :" << Sb                           << std::endl;
+        std::cout << "velocity V     :" << V                            << std::endl;
+        std::cout << "acceleration A :" << A                            << std::endl;
+    }
 
     //! ----------------- ---- -- Concave period, figur 5.1. -- ---- ----------------------------
     //! up
 
-
-    Sa = Sa - Vo*(ti-t) + Jm*((ti-t)*(ti-t)*(ti-t))/6;
-
-    V = Vo + Jm*((ti-t)*(ti-t))/2;
-
-    A = Jm*(ti-t);
-
-    std::cout << "----- Results dcc concave period -----"           << std::endl;
-    std::cout << "period   t     :" << t                            << std::endl;
-    std::cout << "distance S     :" << Sa                           << std::endl;
-    std::cout << "velocity V     :" << V                            << std::endl;
-    std::cout << "acceleration A :" << A                            << std::endl;
-
-    return 0;
+    temp = Sa;
+    for(double t=0; t<=T/2; t+=0.5){
+        Sa = temp - Vo*(ti-t) + Jm*((ti-t)*(ti-t)*(ti-t))/6;
+        V = Vo + Jm*((ti-t)*(ti-t))/2;
+        A = -abs(Jm*(ti-t));
+        std::cout << "----- Results dcc concave period -----"           << std::endl;
+        std::cout << "period   t     :" << t                            << std::endl;
+        std::cout << "distance S     :" << Sa                           << std::endl;
+        std::cout << "velocity V     :" << V                            << std::endl;
+        std::cout << "acceleration A :" << A                            << std::endl;
+    }
 }
+
+
+
+
+
+
+
+
+
+
