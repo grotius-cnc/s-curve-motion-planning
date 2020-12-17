@@ -87,9 +87,10 @@ int main()
     
     // 
     
-    
     //! The DeAcceleration start here !!
-    //!
+    //! Try to mirror the acc into dcc.
+    //! We mirror the time t.
+    //! We mirror the distance Sa and Sb.
     //!
     //!
     //!
