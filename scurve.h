@@ -1,7 +1,6 @@
 #ifndef SCURVE_H
 #define SCURVE_H
 
-#include "external_var.h"
 #include "math.h"           /* Used for pow and sqrt */
 #include "iostream"
 
