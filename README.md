@@ -1,5 +1,8 @@
 # S-curve-motion-planning
 
+Soon new updated code including velocity transition.
+![scurve_analyzer](https://user-images.githubusercontent.com/44880102/146796061-9dbfcec6-fb4b-4787-ae9e-029c631ed3b0.jpg)
+
 Halcomponent example included in release page.
 https://github.com/grotius-cnc/S-curve-motion-planning/releases/tag/1.0.4
 
