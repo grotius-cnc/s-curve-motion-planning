@@ -2,13 +2,22 @@
 
 Provided as shared library, c & c++ compatible.
 
-Usage from c, c++:
+Using example functions:
 
-    int scurve_lineair(double at_time, double ve, double s, double &st, double &ct);
+    example_lineair();
     Output: dispalcement[st]:1.5 at_time[i]0.3
     
-    int scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time, double &sr, double &vr, double &ar, double &ct);
+    example_scurve();
     Output: at_time:0.310 sr:0.218 vr:0.202 ar:-2.798 ct:0.455
+    
+Lineair stage request:
+
+    int scurve_lineair(double at_time, double ve, double s, double &st, double &ct);
+    
+S-curve acc or dcc stage request:
+
+    int scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time, double &sr, double &vr, double &ar, double &ct);
+    
         
 Implementition:
 - velocity up s-curve [acc period]
