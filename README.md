@@ -1,7 +1,19 @@
-# S-curve-motion-planning
+# S-curve-motion-planning, scientific papers included.
 
-Soon new updated code including velocity transition.
-![scurve_analyzer](https://user-images.githubusercontent.com/44880102/146796061-9dbfcec6-fb4b-4787-ae9e-029c631ed3b0.jpg)
+At the release page, an archive is included how to create a s-curve.
+This archive example code can be used to build motion blocks.
+The functions ar c, c++ compatible. You can delete the opencascade graphics part from the code, it's just used
+to check outputs.
+- velocity up s-curve [acc period]
+- velocity down s-curve [dcc period].
+- acceleration begin value.
+- acceleration end value.
+- velocity begin.
+- velocity end.
+- max acceleration.
+- lineair stage example.
+
+![scurve_acc_dcc](https://user-images.githubusercontent.com/44880102/146907278-0098c91a-85bc-44e6-95a0-26e20ad44f95.jpg)
 
 Halcomponent example included in release page.
 https://github.com/grotius-cnc/S-curve-motion-planning/releases/tag/1.0.4
