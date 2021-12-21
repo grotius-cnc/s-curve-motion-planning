@@ -19,9 +19,11 @@ S-curve acc or dcc stage request:
     int scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time, double &sr, double &vr, double &ar, double &ct);
     
         
-Implementition:
+Implementation:
 - velocity up s-curve [acc period]
+    using convex + concave periods.
 - velocity down s-curve [dcc period].
+    using convex + concave periods.
 - acceleration begin value.
 - acceleration end value.
 - velocity begin.
