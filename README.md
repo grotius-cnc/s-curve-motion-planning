@@ -4,6 +4,9 @@
 [![stars - s-curve-motion-planning](https://img.shields.io/github/stars/grotius-cnc/s-curve-motion-planning?style=social)](https://github.com/grotius-cnc/s-curve-motion-planning)
 [![forks - s-curve-motion-planning](https://img.shields.io/github/forks/grotius-cnc/s-curve-motion-planning?style=social)](https://github.com/grotius-cnc/s-curve-motion-planning)
 
+[![GitHub release](https://img.shields.io/github/release/grotius-cnc/s-curve-motion-planning?include_prereleases=&sort=semver&color=blue)](https://github.com/grotius-cnc/s-curve-motion-planning/releases/)
+[![License](https://img.shields.io/badge/License-MIT-blue)](#license)
+
 Using example functions:
 
     example_lineair();
@@ -40,3 +43,6 @@ Graphic implementation:
 
 To use the opencascade graphics along with the gui project, follow these instructions : https://github.com/grotius-cnc/oce/releases/tag/1.0.1
 
+## License
+
+Released under [MIT](/LICENSE) by [@grotius-cnc](https://github.com/grotius-cnc).
