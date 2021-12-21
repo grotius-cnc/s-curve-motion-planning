@@ -1,7 +1,5 @@
 # S-curve-motion-planning, 
 
-Provided as shared library, c & c++ compatible.
-
 Using example functions:
 
     example_lineair();
