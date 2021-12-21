@@ -3,10 +3,13 @@
 Provided as shared library, c & c++ compatible.
 
 Usage from c, c++:
-    
-    int scurve_lineair(double at_time, double ve, double s, double &st, double &ct);
-    int scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time, double &sr, double &vr, double &ar, double &ct);
 
+    int scurve_lineair(double at_time, double ve, double s, double &st, double &ct);
+    Output: dispalcement[st]:1.5 at_time[i]0.3
+    
+    int scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time, double &sr, double &vr, double &ar, double &ct);
+    Output: at_time:0.310 sr:0.218 vr:0.202 ar:-2.798 ct:0.455
+        
 Implementition:
 - velocity up s-curve [acc period]
 - velocity down s-curve [dcc period].
