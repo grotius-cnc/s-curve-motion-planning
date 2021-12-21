@@ -43,6 +43,16 @@ Graphic implementation:
 
 To use the opencascade graphics along with the gui project, follow these instructions : https://github.com/grotius-cnc/oce/releases/tag/1.0.1
 
+</div>
+
+## Documentation
+
+<div align="center">
+
+[![view - Documentation](https://img.shields.io/badge/view-Documentation-blue?style=for-the-badge)](/docs/ "Go to project documentation")
+
+</div>
+
 ## License
 
 Released under [MIT](/LICENSE) by [@grotius-cnc](https://github.com/grotius-cnc).
