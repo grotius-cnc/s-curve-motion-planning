@@ -1,5 +1,9 @@
 # S-curve-motion-planning, 
 
+[![grotius - s-curve-motion-planning](https://img.shields.io/static/v1?label=grotius&message=s-curve-motion-planning&color=blue&logo=github)](https://github.com/grotius/s-curve-motion-planning "Go to GitHub repo")
+[![stars - s-curve-motion-planning](https://img.shields.io/github/stars/grotius/s-curve-motion-planning?style=social)](https://github.com/grotius/s-curve-motion-planning)
+[![forks - s-curve-motion-planning](https://img.shields.io/github/forks/grotius/s-curve-motion-planning?style=social)](https://github.com/grotius/s-curve-motion-planning)
+
 Using example functions:
 
     example_lineair();
