@@ -116,7 +116,7 @@ example_0.c request a example function
                         //! g++ example_0.c -o example_0 -L$PWD -lscurve
 
                         //! Run:
-                        //! ./main
+                        //! ./example_0
 
                         int main(int argc, char *argv[]) {
                             Scurve().example_motion();
