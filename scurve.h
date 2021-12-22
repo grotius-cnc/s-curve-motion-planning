@@ -3,9 +3,10 @@
 
 #include "scurve_global.h"
 #include "iostream"
+#include "chrono"
 
 //! This shared library is written by Skynet Cyberdyne.
-//! You all will get a qr chip soon !!
+//! No green pass is required to use this software, just use your mind.
 
 class SCURVE_EXPORT Scurve
 {
@@ -36,9 +37,27 @@ public:
     //! ar=current acceleration at [t]
     //!
     //! ct=netto curve time [t] excluding acc start time, acc end time.
+    //! cs=netto curve displacement.
     //!
-    int scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time, double &sr, double &vr, double &ar, double &ct);
+    int scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time, double &sr, double &vr, double &ar, double &ct, double &cs);
     void example_scurve();
+
+    //! Inputs:
+    //! vs=velocity max.
+    //! am=acceleration max.
+    //! ltot=pathlenght.
+    //! vo=velocity begin.
+    //! acs=acceleration begin.
+    //! ve=velocity end.
+    //! ace=acceleration end.
+    //! at_time=curve request at time [t]
+    //! Results:
+    //! sr=current displacement.
+    //! vr=current velocity.
+    //! ar=current acceleration.
+    //! ct=total curve time.
+    int motion_block(double vs, double am, double vo, double acs, double ltot, double ve, double ace, double at_time, double &sr, double &vr, double &ar , double &ct);
+    void example_motion();
 };
 
 #endif // SCURVE_H
