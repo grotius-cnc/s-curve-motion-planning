@@ -10,18 +10,26 @@
 Using example functions:
 
     example_lineair();
-    Output: dispalcement[st]:1.5 at_time[i]0.3
+    Output: at_time:0.000 sr:2.000 vr:5.000 ar:0.000 ct:0.000
     
     example_scurve();
-    Output: at_time:0.310 sr:0.218 vr:0.202 ar:-2.798 ct:0.455
+    Output: at_time:4.960 sr:12.300 vr:4.999 ar:0.032 ct:5.000
+    
+    example_motion();
+    Output: at_time:14.800 sr:99.998 vr:0.032 ar:-0.320 ct:15.000
+    Time taken by function nanoseconds: 1397 milliseconds:0.001
     
 Lineair stage request:
 
-    int scurve_lineair(double at_time, double ve, double s, double &st, double &ct);
+                scurve_lineair( double at_time, 
+                                double vs, 
+                                double s, 
+                                double &ct, 
+                                double &sr){
     
 S-curve acc or dcc stage request:
 
-   int Scurve::scurve_acc_dcc(  int sct, 
+    int Scurve::scurve_acc_dcc(  int sct, 
                                 double vo, 
                                 double ve, 
                                 double am, 
@@ -33,11 +41,21 @@ S-curve acc or dcc stage request:
                                 double &ar, 
                                 double &ct, 
                                 double &cs);
-   
 
 Motion block request:
 
-    motion_block(double vs, double am, double vo, double acs, double ltot, double ve, double ace, double at_time, double &sr,double &vr, double &ar ,double &ct);
+                motion_block(   double vs, 
+                                double am, 
+                                double vo, 
+                                double acs, 
+                                double ltot, 
+                                double ve, 
+                                double ace, 
+                                double at_time, 
+                                double &sr,
+                                double &vr, 
+                                double &ar,
+                                double &ct);
     
 Implementation:
 
