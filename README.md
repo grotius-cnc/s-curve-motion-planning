@@ -1,4 +1,11 @@
-# S-curve-motion-planning, 
+# S-curve-motion-planning.
+
+The purpose of this material is to impart an understanding of polynomial transitions for a trajectory generator. The ideal constant jerk S-curve
+(jerk is the derivate of acceleration and a measure of impact) can be represented by a second-order polynomial in velocity (3rd in position). 
+Its shape is governed by the motion conditions at the start and end of the transition.
+
+An S-curve with an intermediate constant acceleration (lineair portion) is often used to reduce the time to make large speed changes. The jerk can be
+used to determine how much of the rise or fall period can be made under constant acceleration.
 
 [![grotius-cnc - s-curve-motion-planning](https://img.shields.io/static/v1?label=grotius-cnc&message=s-curve-motion-planning&color=blue&logo=github)](https://github.com/grotius-cnc/s-curve-motion-planning "Go to GitHub repo")
 [![stars - s-curve-motion-planning](https://img.shields.io/github/stars/grotius-cnc/s-curve-motion-planning?style=social)](https://github.com/grotius-cnc/s-curve-motion-planning)
@@ -9,15 +16,15 @@
 
 Using example functions:
 
-    example_lineair();
-    Output: at_time:0.000 sr:2.000 vr:5.000 ar:0.000 ct:0.000
+    void example_lineair();
+        Output: at_time:0.000 sr:2.000 vr:5.000 ar:0.000 ct:0.000
     
-    example_scurve();
-    Output: at_time:4.960 sr:12.300 vr:4.999 ar:0.032 ct:5.000
+    void example_scurve();
+        Output: at_time:4.960 sr:12.300 vr:4.999 ar:0.032 ct:5.000
     
-    example_motion();
-    Output: at_time:14.800 sr:99.998 vr:0.032 ar:-0.320 ct:15.000
-    Time taken by function nanoseconds: 1397 milliseconds:0.001
+    void example_motion();
+        Output: at_time:14.800 sr:99.998 vr:0.032 ar:-0.320 ct:15.000
+        Time taken by function nanoseconds: 1397 milliseconds:0.001
     
 Lineair stage request:
 
@@ -29,7 +36,7 @@ Lineair stage request:
                                     //! st=displacment at_time request.
                                     //! ct=total curve time.
     
-                    scurve_lineair( double at_time,     
+                   int scurve_lineair( double at_time,     
                                     double vs, 
                                     double s, 
                                     double &ct, 
@@ -82,7 +89,7 @@ Motion block request:
                                     //! ar=current acceleration.
                                     //! ct=total curve time.
     
-                      motion_block( double vs, 
+                  int motion_block( double vs, 
                                     double am, 
                                     double vo, 
                                     double acs, 
