@@ -21,41 +21,41 @@ Using example functions:
     
 Lineair stage request:
 
-                scurve_lineair( double at_time, 
-                                double vs, 
-                                double s, 
-                                double &ct, 
-                                double &sr){
+                    scurve_lineair( double at_time, 
+                                    double vs, 
+                                    double s, 
+                                    double &ct, 
+                                    double &sr){
     
 S-curve acc or dcc stage request:
 
-    int Scurve::scurve_acc_dcc(  int sct, 
-                                double vo, 
-                                double ve, 
-                                double am, 
-                                double acs, 
-                                double ace, 
-                                double at_time, 
-                                double &sr, 
-                                double &vr, 
-                                double &ar, 
-                                double &ct, 
-                                double &cs);
+        int Scurve::scurve_acc_dcc( int sct, 
+                                    double vo, 
+                                    double ve, 
+                                    double am, 
+                                    double acs, 
+                                    double ace, 
+                                    double at_time, 
+                                    double &sr, 
+                                    double &vr, 
+                                    double &ar, 
+                                    double &ct, 
+                                    double &cs);
 
 Motion block request:
 
-                motion_block(   double vs, 
-                                double am, 
-                                double vo, 
-                                double acs, 
-                                double ltot, 
-                                double ve, 
-                                double ace, 
-                                double at_time, 
-                                double &sr,
-                                double &vr, 
-                                double &ar,
-                                double &ct);
+                      motion_block( double vs, 
+                                    double am, 
+                                    double vo, 
+                                    double acs, 
+                                    double ltot, 
+                                    double ve, 
+                                    double ace, 
+                                    double at_time, 
+                                    double &sr,
+                                    double &vr, 
+                                    double &ar,
+                                    double &ct);
     
 Implementation:
 
