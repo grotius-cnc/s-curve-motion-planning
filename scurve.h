@@ -1,14 +1,13 @@
 #ifndef SCURVE_H
 #define SCURVE_H
 
-#include "scurve_global.h"
 #include "iostream"
 #include "chrono"
 
 //! This shared library is written by Skynet Cyberdyne.
 //! No green pass is required to use this software, just use your mind.
 
-class SCURVE_EXPORT Scurve
+class Scurve
 {
 public:
     Scurve();

@@ -1,4 +1,4 @@
-QT -= gui
+QT -= gui core
 
 TEMPLATE = lib
 DEFINES += SCURVE_LIBRARY
@@ -13,7 +13,6 @@ SOURCES += \
     scurve.cpp
 
 HEADERS += \
-    scurve_global.h \
     scurve.h
 
 # Default rules for deployment.

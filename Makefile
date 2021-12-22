@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DSCURVE_LIBRARY -DQT_QML_DEBUG -DQT_CORE_LIB
+DEFINES       = -DSCURVE_LIBRARY -DQT_QML_DEBUG
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I/opt/qt-creator/5.15.1/gcc_64/include -I/opt/qt-creator/5.15.1/gcc_64/include/QtCore -I. -I/opt/qt-creator/5.15.1/gcc_64/mkspecs/linux-g++
+INCPATH       = -I. -I/opt/qt-creator/5.15.1/gcc_64/mkspecs/linux-g++
 QMAKE         = /opt/qt-creator/5.15.1/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -39,8 +39,8 @@ COMPRESS      = gzip -9f
 DISTNAME      = scurve1.0.0
 DISTDIR = /opt/hal-core/src/hal/components/matrix/cpp_interface/libscurve/.tmp/scurve1.0.0
 LINK          = g++
-LFLAGS        = -Wl,-rpath,/opt/qt-creator/5.15.1/gcc_64/lib -shared -Wl,-soname,libscurve.so.1
-LIBS          = $(SUBLIBS) /opt/qt-creator/5.15.1/gcc_64/lib/libQt5Core.so -lpthread   
+LFLAGS        = -shared -Wl,-soname,libscurve.so.1
+LIBS          = $(SUBLIBS) -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -219,9 +219,6 @@ DIST          = /opt/qt-creator/5.15.1/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/qml_debug.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/warn_on.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/qt.prf \
-		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/resources_functions.prf \
-		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/resources.prf \
-		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/moc.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/unix/thread.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/qmake_use.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/file_copies.prf \
@@ -229,8 +226,7 @@ DIST          = /opt/qt-creator/5.15.1/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/exceptions.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/yacc.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/lex.prf \
-		scurve.pro scurve_global.h \
-		scurve.h scurve.cpp
+		scurve.pro scurve.h scurve.cpp
 QMAKE_TARGET  = scurve
 DESTDIR       = 
 TARGET        = libscurve.so.1.0.0
@@ -424,9 +420,6 @@ Makefile: scurve.pro /opt/qt-creator/5.15.1/gcc_64/mkspecs/linux-g++/qmake.conf 
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/qml_debug.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/warn_on.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/qt.prf \
-		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/resources_functions.prf \
-		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/resources.prf \
-		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/moc.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/unix/thread.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/qmake_use.prf \
 		/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/file_copies.prf \
@@ -601,9 +594,6 @@ Makefile: scurve.pro /opt/qt-creator/5.15.1/gcc_64/mkspecs/linux-g++/qmake.conf 
 /opt/qt-creator/5.15.1/gcc_64/mkspecs/features/qml_debug.prf:
 /opt/qt-creator/5.15.1/gcc_64/mkspecs/features/warn_on.prf:
 /opt/qt-creator/5.15.1/gcc_64/mkspecs/features/qt.prf:
-/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/resources_functions.prf:
-/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/resources.prf:
-/opt/qt-creator/5.15.1/gcc_64/mkspecs/features/moc.prf:
 /opt/qt-creator/5.15.1/gcc_64/mkspecs/features/unix/thread.prf:
 /opt/qt-creator/5.15.1/gcc_64/mkspecs/features/qmake_use.prf:
 /opt/qt-creator/5.15.1/gcc_64/mkspecs/features/file_copies.prf:
@@ -626,9 +616,6 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents /opt/qt-creator/5.15.1/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents scurve_global.h scurve.h $(DISTDIR)/
-	$(COPY_FILE) --parents scurve.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -644,61 +631,21 @@ distclean: clean
 
 ####### Sub-libraries
 
-mocclean: compiler_moc_header_clean compiler_moc_objc_header_clean compiler_moc_source_clean
-
-mocables: compiler_moc_header_make_all compiler_moc_objc_header_make_all compiler_moc_source_make_all
-
 check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
-compiler_rcc_clean:
-compiler_moc_predefs_make_all: moc_predefs.h
-compiler_moc_predefs_clean:
-	-$(DEL_FILE) moc_predefs.h
-moc_predefs.h: /opt/qt-creator/5.15.1/gcc_64/mkspecs/features/data/dummy.cpp
-	g++ -pipe -g -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h /opt/qt-creator/5.15.1/gcc_64/mkspecs/features/data/dummy.cpp
-
-compiler_moc_header_make_all:
-compiler_moc_header_clean:
-compiler_moc_objc_header_make_all:
-compiler_moc_objc_header_clean:
-compiler_moc_source_make_all:
-compiler_moc_source_clean:
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean 
+compiler_clean: 
 
 ####### Compile
 
-scurve.o: scurve.cpp scurve.h \
-		scurve_global.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qglobal.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qconfig.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qtcore-config.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qsystemdetection.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qprocessordetection.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qcompilerdetection.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qtypeinfo.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qsysinfo.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qlogging.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qflags.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qatomic.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qbasicatomic.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qgenericatomic.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qatomic_cxx11.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qatomic_msvc.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qglobalstatic.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qmutex.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qnumeric.h \
-		/opt/qt-creator/5.15.1/gcc_64/include/QtCore/qversiontagging.h
+scurve.o: scurve.cpp scurve.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o scurve.o scurve.cpp
 
 ####### Install
