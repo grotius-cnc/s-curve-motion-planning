@@ -21,7 +21,15 @@ Using example functions:
     
 Lineair stage request:
 
-                    scurve_lineair( double at_time, 
+                                    //! Inputs:
+                                    //! at_time=request displacment at a certain time stamp.
+                                    //! ve=velocity
+                                    //! s=total displacement
+                                    //! Outputs:
+                                    //! st=displacment at_time request.
+                                    //! ct=total curve time.
+    
+                    scurve_lineair( double at_time,     
                                     double vs, 
                                     double s, 
                                     double &ct, 
@@ -29,6 +37,21 @@ Lineair stage request:
     
 S-curve acc or dcc stage request:
 
+                                    //! Inputs:
+                                    //! sct=scurve type [0=acc, 1=dcc]
+                                    //! vo=velocity start
+                                    //! vs=velocity max
+                                    //! ve=velocity end
+                                    //! am=acceleration max
+                                    //! acs=acceleration start
+                                    //! ace=acceleration end
+                                    //! Results:
+                                    //! at_time=request curve at [t]
+                                    //! vr=current_velocity at [t]
+                                    //! ar=current acceleration at [t]
+                                    //! ct=total curve time [t] excluding acc start time, acc end time.
+                                    //! cs=total curve displacement.
+    
         int Scurve::scurve_acc_dcc( int sct, 
                                     double vo, 
                                     double ve, 
@@ -44,6 +67,21 @@ S-curve acc or dcc stage request:
 
 Motion block request:
 
+                                    //! Inputs:
+                                    //! vs=velocity max.
+                                    //! am=acceleration max.
+                                    //! ltot=pathlenght.
+                                    //! vo=velocity begin.
+                                    //! acs=acceleration begin.
+                                    //! ve=velocity end.
+                                    //! ace=acceleration end.
+                                    //! at_time=curve request at time [t]
+                                    //! Results:
+                                    //! sr=current displacement.
+                                    //! vr=current velocity.
+                                    //! ar=current acceleration.
+                                    //! ct=total curve time.
+    
                       motion_block( double vs, 
                                     double am, 
                                     double vo, 
