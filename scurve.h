@@ -35,10 +35,8 @@ public:
     //! at_time=request curve at [t]
     //! vr=current_velocity at [t]
     //! ar=current acceleration at [t]
-    //!
-    //! ct=netto curve time [t] excluding acc start time, acc end time.
-    //! cs=netto curve displacement.
-    //!
+    //! ct=total curve time [t] excluding acc start time, acc end time.
+    //! cs=total curve displacement.
     int scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time, double &sr, double &vr, double &ar, double &ct, double &cs);
     void example_scurve();
 

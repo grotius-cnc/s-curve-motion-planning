@@ -71,7 +71,9 @@ void MainWindow::on_pushButton_create_motion_block_pressed(){
         r+=motion_block(vs, am, vo, acs, ltot, ve, ace, t,sr,vr,ar,ct);
         auto stop = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start);
-        std::cout << "Time taken by function nanoseconds: " << duration.count() << " milliseconds" << duration.count()*0.000001 <<std::endl;
+        std::cout << "Time taken by function nanoseconds: " << duration.count() << " milliseconds:" << duration.count()*0.000001 <<std::endl;
+
+        std::cout<<std::fixed<<"at_time:"<<t<<" sr:"<<sr<<" vr:"<<vr<<" ar:"<<ar<<" ct:"<<ct<<std::endl;
 
         //! The avarage function time = 1500 us.
         //! ns*0.000001=ms 0.0015 ms. This is ok for 1ms servo thread.
@@ -206,19 +208,19 @@ int MainWindow::motion_block(double vs, double am, double vo, double acs, double
 
 void MainWindow::on_pushButton_show_lin_curve_pressed()
 {
+    std::cout.precision(3);
     double vs=ui->doubleSpinBox_lin_velocity->value();
     double s=ui->doubleSpinBox_lin_displacment->value();
 
     double at_time=0;
     double ct=0;
     double sr=0;
+    double vr=0;
+    double ar=0;
     int r=0;
 
     r+=scurve_lineair(at_time,vs,s,ct,sr);
     if(!r){
-        std::cout<<"Curve time[ct]:"<<ct<<std::endl;
-        std::cout<<"Dispalcement[st] at [at_time]:"<<sr<<std::endl;
-
         //! Draw the full traject.
         Handle(AIS_Shape) aLine;
         aLine=draw_primitives().draw_3d_line({0,vs,0},{ct,vs,0});
@@ -227,7 +229,9 @@ void MainWindow::on_pushButton_show_lin_curve_pressed()
 
         for(double i=0; i<ct; i+=0.1){
             r+=scurve_lineair(i,vs,s,sr,ct);
-            std::cout<<"Dispalcement[st]:"<<sr<<" at_time[i]"<<i<<std::endl;
+            ar=0;   //! Zero acceleration during steady stage.
+            vr=vs;  //! Velocity = Max velocity.
+            std::cout<<std::fixed<<"at_time:"<<i<<" sr:"<<sr<<" vr:"<<vr<<" ar:"<<ar<<" ct:"<<ct<<std::endl;
         }
     }
 }

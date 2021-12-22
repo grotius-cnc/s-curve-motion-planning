@@ -89,6 +89,9 @@ void Scurve::example_scurve(){
     if(ct<0){
         std::cout<<"curve time<0"<<std::endl;
     }
+    if(!r){
+        std::cout<<"at_time:"<<at_time<<" sr:"<<sr<<" vr:"<<vr<<" ar:"<<ar<<" ct:"<<ct<<" cs:"<<cs<<std::endl;
+    }
 }
 
 //! Inputs:
@@ -105,6 +108,7 @@ void Scurve::example_scurve(){
 //! vr=current velocity.
 //! ar=current acceleration.
 //! ct=total curve time.
+//! cs=total curve displacment.
 int Scurve::scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time, double &sr, double &vr, double &ar, double &ct, double &cs){
 
     std::cout.precision(3);
@@ -312,14 +316,11 @@ void Scurve::example_motion(){
         auto start = std::chrono::high_resolution_clock::now();
         r+=motion_block(vs, am, vo, acs, ltot, ve, ace, t,sr,vr,ar,ct);
         if(!r){
-            std::cout<<std::fixed<<"sr:"<<sr<<std::endl;
-            std::cout<<std::fixed<<"vr:"<<vr<<std::endl;
-            std::cout<<std::fixed<<"ar:"<<ar<<std::endl;
-            std::cout<<std::fixed<<"ct:"<<ct<<std::endl;
+             std::cout<<"at_time:"<<at_time<<" sr:"<<sr<<" vr:"<<vr<<" ar:"<<ar<<" ct:"<<ct<<std::endl;
         }
         auto stop = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start);
-        std::cout << "Time taken by function nanoseconds: " << duration.count() << " milliseconds" << duration.count()*0.000001 <<std::endl;
+        std::cout << "Time taken by function nanoseconds: " << duration.count() << " milliseconds:" << duration.count()*0.000001 <<std::endl;
 
         //! The avarage function time = 1500 us.
         //! ns*0.000001=ms 0.0015 ms. This is ok for 1ms servo thread.
