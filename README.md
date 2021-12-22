@@ -128,6 +128,15 @@ example_0.c request a example function
 
 example_1.c request a complex motion 
 
+                                    //! Install scurve library:
+                                    //! sudo make install
+
+                                    //! Compile slogan main.c:
+                                    //! g++ example_1.c -o example_1 -L$PWD -lscurve
+
+                                    //! Run:
+                                    //! ./example_1
+
                                     //! Inputs:
                                     //! vs=velocity max.
                                     //! am=acceleration max.
