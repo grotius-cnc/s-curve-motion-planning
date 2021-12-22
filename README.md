@@ -21,19 +21,40 @@ Lineair stage request:
     
 S-curve acc or dcc stage request:
 
-    int scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time, double &sr, double &vr, double &ar, double &ct);
+   int Scurve::scurve_acc_dcc(  int sct, 
+                                double vo, 
+                                double ve, 
+                                double am, 
+                                double acs, 
+                                double ace, 
+                                double at_time, 
+                                double &sr, 
+                                double &vr, 
+                                double &ar, 
+                                double &ct, 
+                                double &cs);
+   
+
+Motion block request:
+
+    motion_block(double vs, double am, double vo, double acs, double ltot, double ve, double ace, double at_time, double &sr,double &vr, double &ar ,double &ct);
     
 Implementation:
 
-- velocity up s-curve [acc period].
-- velocity down s-curve [dcc period].
-- acceleration begin value.
-- acceleration end value.
-- velocity begin.
-- velocity end.
-- max acceleration.
-- lineair stage.
-- scientific papers included.
+- Velocity up s-curve [acc period].
+- Velocity down s-curve [dcc period].
+- Acceleration begin value.
+- Acceleration end value.
+- Velocity begin.
+- Velocity end.
+- Max acceleration.
+- Lineair stage.
+- Scientific papers included.
+
+Build in Logic:
+
+- If maximum velocity can not be reached for a motion, curves are sampled to fit.
+- Debug information when input values are out of scope.
 
 Performance:
 
