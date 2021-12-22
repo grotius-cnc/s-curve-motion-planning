@@ -61,18 +61,18 @@ S-curve acc or dcc stage request:
                         //! ct=total curve time [t] excluding acc start time, acc end time.
                         //! cs=total curve displacement.
 
-int Scurve::scurve_acc_dcc( int sct, 
-                        double vo, 
-                        double ve, 
-                        double am, 
-                        double acs, 
-                        double ace, 
-                        double at_time, 
-                        double &sr, 
-                        double &vr, 
-                        double &ar, 
-                        double &ct, 
-                        double &cs);
+    int Scurve::scurve_acc_dcc( int sct, 
+                            double vo, 
+                            double ve, 
+                            double am, 
+                            double acs, 
+                            double ace, 
+                            double at_time, 
+                            double &sr, 
+                            double &vr, 
+                            double &ar, 
+                            double &ct, 
+                            double &cs);
 
 Motion block request:
 
