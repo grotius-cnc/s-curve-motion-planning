@@ -112,7 +112,7 @@ example_0.c request a example function
                         //! Install scurve library:
                         //! sudo make install
 
-                        //! Compile slogan main.c:
+                        //! Compile :
                         //! g++ example_0.c -o example_0 -L$PWD -lscurve
 
                         //! Run:
@@ -122,7 +122,7 @@ example_0.c request a example function
                             Scurve().example_motion();
                         }
 
-                        //! Output ./main:
+                        //! Output :
                         //! at_time:0 sr:0.0576 vr:0.288 ar:0.96 ct:15
                         //! Time taken by function nanoseconds: 7473 milliseconds:0.00747
 
@@ -131,7 +131,7 @@ example_1.c request a complex motion
                         //! Install scurve library:
                         //! sudo make install
 
-                        //! Compile slogan main.c:
+                        //! Compile :
                         //! g++ example_1.c -o example_1 -L$PWD -lscurve
 
                         //! Run:
