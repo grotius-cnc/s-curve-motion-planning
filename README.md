@@ -35,11 +35,15 @@ Implementation:
 - lineair stage.
 - scientific papers included.
 
+Performance:
+
+    Time taken to calculate a motion nanoseconds: ~1500 ~4051 
+
 Graphic implementation:
 
     ~/gui_project/motion/
-
-![scurve_acc_dcc](https://user-images.githubusercontent.com/44880102/146907278-0098c91a-85bc-44e6-95a0-26e20ad44f95.jpg)
+    
+![scurvemotion](https://user-images.githubusercontent.com/44880102/147080009-f6e50645-2be6-46e6-a253-6fbf8488c1de.jpg)
 
 To use the opencascade graphics along with the gui project, follow these instructions : https://github.com/grotius-cnc/oce/releases/tag/1.0.1
 
