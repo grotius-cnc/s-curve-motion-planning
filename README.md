@@ -104,7 +104,7 @@ Motion block request:
                                     double &ar,
                                     double &ct);
    
-example_0.c user example
+example_0.c request a example function
 
                                     #include <stdio.h>
                                     #include "scurve.h"
@@ -126,7 +126,7 @@ example_0.c user example
                                     //! at_time:0 sr:0.0576 vr:0.288 ar:0.96 ct:15
                                     //! Time taken by function nanoseconds: 7473 milliseconds:0.00747
 
-example_1.c motion example
+example_1.c request a complex motion 
 
                                     //! Inputs:
                                     //! vs=velocity max.
