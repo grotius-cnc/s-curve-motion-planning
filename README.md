@@ -35,8 +35,8 @@ Lineair stage request:
                         //! ve=velocity
                         //! s=total displacement
                         //! Outputs:
-                        //! st=displacment at_time request.
                         //! ct=total curve time.
+                        //! sr=displacment at_time request.
 
        int scurve_lineair( double at_time,     
                         double vs, 
