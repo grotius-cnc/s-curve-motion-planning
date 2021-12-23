@@ -49,7 +49,6 @@ S-curve acc or dcc stage request:
                         //! Inputs:
                         //! sct=scurve type [0=acc, 1=dcc]
                         //! vo=velocity start
-                        //! vs=velocity max
                         //! ve=velocity end
                         //! am=acceleration max
                         //! acs=acceleration start
