@@ -14,15 +14,6 @@ Its shape is governed by the motion conditions at the start and end of the trans
 An S-curve with an intermediate constant acceleration (lineair portion) is often used to reduce the time to make large speed changes. The jerk can be
 used to determine how much of the rise or fall period can be made under constant acceleration.
 
-Motion starting with a negative begin acceleration. This is a exotic example how complex the velocity transition can be:
-
-![scurve_example](https://user-images.githubusercontent.com/44880102/147381940-9394686b-a1be-40a1-8397-6f017c47851b.jpg)
-
-Controlled stop from a positive acceleration begin value. 
-
-![scurve_example1](https://user-images.githubusercontent.com/44880102/147382103-aee03e89-9b9b-43ab-afc1-1d2318cb66f8.jpg)
-
-
 Implementation:
 
 - Velocity up s-curve [acc period].
@@ -35,7 +26,7 @@ Implementation:
 - Lineair stage.
 - Scientific papers included.
 
-- Functions:
+Functions:
 
         //! Inputs:
         //! at_time=request displacment at a certain time stamp.
@@ -66,7 +57,7 @@ Implementation:
         //! at_time=curve request at time [t]
         RESULT motion(double vs, double am, double vo, double acs, double ltot, double ve, double ace, double at_time);
 
-- Result:
+Result:
 
         struct RESULT{
             //! Displacement result.
@@ -95,6 +86,16 @@ Performance:
 Graphic implementation:
 
     ~/gui_project/motion/
+    
+Motion starting with a negative begin acceleration. This is a exotic example how complex the velocity transition can be:
+
+![scurve_example](https://user-images.githubusercontent.com/44880102/147381940-9394686b-a1be-40a1-8397-6f017c47851b.jpg)
+
+Controlled stop from a positive acceleration begin value. 
+
+![scurve_example1](https://user-images.githubusercontent.com/44880102/147382103-aee03e89-9b9b-43ab-afc1-1d2318cb66f8.jpg)
+
+
 
 To use the opencascade graphics along with the gui project, follow these instructions : https://github.com/grotius-cnc/oce/releases/tag/1.0.1
 
