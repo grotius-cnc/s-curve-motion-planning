@@ -1,29 +1,49 @@
-#include "scurve.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include <vector>
+#include <string>
+#include <math.h>
+#include <iostream>
 
-Scurve::Scurve()
+using namespace occ;
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
 {
+    ui->setupUi(this);
+
+    OpencascadeWidget = new Opencascade(this);
+    ui->gridLayout_opencascade->addWidget(OpencascadeWidget);
 }
 
-void Scurve::example(){
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::on_pushButton_create_motion_block_pressed(){
     std::cout.precision(3);
+    Handle(AIS_Shape) awire;
+    std::vector<gp_Pnt> pvec_v, pvec_s, pvec_a;
 
     //! Velocity max.
-    double vs=10;
+    double vs=ui->doubleSpinBox_mb_velocity_max->value();
     //! Acceleration max.
-    double am=2;
+    double am=ui->doubleSpinBox_mb_acc_max->value();
 
     //! Pathlenght.
-    double ltot=100;
+    double ltot=ui->doubleSpinBox_mb_pathlenght->value();
 
     //! Velocity begin.
-    double vo=0;
+    double vo=ui->doubleSpinBox_mb_velocity_start->value();
     //! Acceleration begin.
-    double acs=0;
+    double acs=ui->doubleSpinBox_mb_acc_begin->value();
 
     //! Velocity end.
-    double ve=0;
+    double ve=ui->doubleSpinBox_mb_velocity_end->value();
     //! Acceleration end.
-    double ace=0;
+    double ace=ui->doubleSpinBox_mb_acc_end->value();
 
     double t=0;
 
@@ -33,16 +53,38 @@ void Scurve::example(){
 
         RESULT r=motion(vs, am, vo, acs, ltot, ve, ace, t);
         t+=0.1;
-        //! Exit when time > result.curvetime.
         if(t>=r.ct){
             ok=0;
         }
 
-        std::cout<<std::fixed<<"at_time:"<<t<<" sr:"<<r.sr<<" vr:"<<r.vr<<" ar:"<<r.ar<<" ct:"<<r.ct<<" error status:"<<r.error<<std::endl;
+        std::cout<<std::fixed<<"at_time:"<<t<<" sr:"<<r.sr<<" vr:"<<r.vr<<" ar:"<<r.ar<<" ct:"<<r.ct<<std::endl;
+
+        if(!r.error){
+            pvec_v.push_back({t,r.vr,0});
+            pvec_s.push_back({t,r.sr*0.1/*scale*/,0});
+            pvec_a.push_back({t,r.ar,0});
+        }
+    }
+    if(pvec_v.size()>0){
+        awire=draw_primitives().draw_3d_line_wire(pvec_v);
+        awire=draw_primitives().colorize(awire,Quantity_NOC_BLACK,0);
+        OpencascadeWidget->show_shape(awire);
+    }
+    if(pvec_s.size()>0){
+        awire=draw_primitives().draw_3d_line_wire(pvec_s);
+        awire=draw_primitives().colorize(awire,Quantity_NOC_BLUE,0);
+        OpencascadeWidget->show_shape(awire);
+    }
+    if(pvec_a.size()>0){
+        awire=draw_primitives().draw_3d_line_wire(pvec_a);
+        awire=draw_primitives().colorize(awire,Quantity_NOC_RED,0);
+        OpencascadeWidget->show_shape(awire);
+
+        OpencascadeWidget->Redraw();
     }
 }
 
-Scurve::RESULT Scurve::motion(double vs, double am, double vo, double acs, double ltot, double ve, double ace, double at_time){
+MainWindow::RESULT MainWindow::motion(double vs, double am, double vo, double acs, double ltot, double ve, double ace, double at_time){
 
     RESULT r;
     double t=0;
@@ -60,6 +102,7 @@ Scurve::RESULT Scurve::motion(double vs, double am, double vo, double acs, doubl
         t=at_time;
         if(ve<vs){vs=ve;}
         r=scurve_acc_dcc(1,vo, vs, am, acs, ace ,t);
+        std::cout<<"mode 0"<<std::endl;
         return r;
     }
 
@@ -76,6 +119,13 @@ Scurve::RESULT Scurve::motion(double vs, double am, double vo, double acs, doubl
         a=scurve_acc_dcc(0,vo, vo+gain, am, acs, 0/*ace*/ ,t);
         b=scurve_acc_dcc(1,vo+gain, vs, am, 0/*acs*/, ace ,t);
         ct=a.ct+b.ct;
+        /*
+        std::cout<<"l0:"<<a.cs<<std::endl;
+        std::cout<<"l1:"<<b.cs<<std::endl;
+        std::cout<<"ltot:"<<a.cs+b.cs<<std::endl;
+        std::cout<<"t0:"<<a.ct<<std::endl;
+        std::cout<<"t1:"<<b.ct<<std::endl;
+        std::cout<<"ttot:"<<a.ct+b.ct<<std::endl;*/
 
         t=at_time;
 
@@ -89,6 +139,7 @@ Scurve::RESULT Scurve::motion(double vs, double am, double vo, double acs, doubl
         }
 
         r.ct=ct;
+        std::cout<<"mode 1"<<std::endl;
         return r;
     }
 
@@ -104,6 +155,16 @@ Scurve::RESULT Scurve::motion(double vs, double am, double vo, double acs, doubl
         double lb=ltot-(a.cs+c.cs);
         b=scurve_lineair(0,vs,lb);
         ct=a.ct+b.ct+c.ct;
+
+        /*
+        std::cout<<"l0:"<<a.cs<<std::endl;
+        std::cout<<"l1:"<<b.cs<<std::endl;
+        std::cout<<"l2:"<<c.cs<<std::endl;
+        std::cout<<"ltot:"<<a.cs+b.cs+c.cs<<std::endl;
+        std::cout<<"t0:"<<a.ct<<std::endl;
+        std::cout<<"t1:"<<b.ct<<std::endl;
+        std::cout<<"t2:"<<c.ct<<std::endl;
+        std::cout<<"ttot:"<<a.ct+b.ct+c.ct<<std::endl;*/
 
         if(lb<0){
             std::cout<<"lin stage<0!"<<std::endl;
@@ -138,6 +199,7 @@ Scurve::RESULT Scurve::motion(double vs, double am, double vo, double acs, doubl
 
         }
         r.ct=ct;
+        std::cout<<"mode 2"<<std::endl;
         return r;
     }
 
@@ -154,6 +216,18 @@ Scurve::RESULT Scurve::motion(double vs, double am, double vo, double acs, doubl
         double lc=ltot-(a.cs+b.cs+d.cs);
         c=scurve_lineair(0,vs,lc);
         ct=a.ct+b.ct+c.ct+d.ct;
+
+        /*
+        std::cout<<"l0:"<<a.cs<<std::endl;
+        std::cout<<"l1:"<<b.cs<<std::endl;
+        std::cout<<"l2:"<<c.cs<<std::endl;
+        std::cout<<"l3:"<<d.cs<<std::endl;
+        std::cout<<"ltot:"<<a.cs+b.cs+c.cs+d.cs<<std::endl;
+        std::cout<<"t0:"<<a.ct<<std::endl;
+        std::cout<<"t1:"<<b.ct<<std::endl;
+        std::cout<<"t2:"<<c.ct<<std::endl;
+        std::cout<<"t3:"<<d.ct<<std::endl;
+        std::cout<<"ttot:"<<a.ct+b.ct+c.ct+d.ct<<std::endl;*/
 
         if(lc<0){
             std::cout<<"lin stage<0!"<<std::endl;
@@ -196,6 +270,7 @@ Scurve::RESULT Scurve::motion(double vs, double am, double vo, double acs, doubl
             r.sr+=c.cs;
         }
         r.ct=ct;
+        std::cout<<"mode 3"<<std::endl;
         return r;
     }
 
@@ -210,8 +285,15 @@ Scurve::RESULT Scurve::motion(double vs, double am, double vo, double acs, doubl
 //! am=acceleration max
 //! acs=acceleration start
 //! ace=acceleration end
-//! at_time=request curve state at time stamp.
-Scurve::RESULT Scurve::scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time){
+//! Results:
+//! at_time=request curve at [t]
+//! sr=current displacment at [t]
+//! vr=current_velocity at [t]
+//! ar=current acceleration at [t]
+//!
+//! ct=netto curve time [t] excluding acc start time, acc end time.
+//!
+MainWindow::RESULT MainWindow::scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time){
 
     RESULT r;
 
@@ -369,7 +451,7 @@ Scurve::RESULT Scurve::scurve_acc_dcc(int sct, double vo, double ve, double am, 
     return r;
 }
 
-Scurve::RESULT Scurve::scurve_lineair(double at_time, double vs, double cs){
+MainWindow::RESULT MainWindow::scurve_lineair(double at_time, double vs, double cs){
     RESULT r;
 
     //! Limits.
@@ -400,13 +482,120 @@ Scurve::RESULT Scurve::scurve_lineair(double at_time, double vs, double cs){
     return r;
 }
 
+void MainWindow::on_pushButton_clear_dcc_curve_pressed()
+{
+    OpencascadeWidget->Remove_all();
+}
 
+void MainWindow::on_pushButton_clear_lin_curve_pressed()
+{
+    OpencascadeWidget->Remove_all();
+}
 
+void MainWindow::on_pushButton_mb_clear_pressed()
+{
+    OpencascadeWidget->Remove_all();
+}
 
+void MainWindow::on_doubleSpinBox_velocity_start_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_show_acc_dcc_curve_pressed();
+}
 
+void MainWindow::on_doubleSpinBox_velocity_end_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_show_acc_dcc_curve_pressed();
+}
 
+void MainWindow::on_doubleSpinBox_acceleration_max_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_show_acc_dcc_curve_pressed();
+}
 
+void MainWindow::on_doubleSpinBox_acceleration_end_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_show_acc_dcc_curve_pressed();
+}
 
+void MainWindow::on_doubleSpinBox_acceleration_begin_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_show_acc_dcc_curve_pressed();
+}
 
+void MainWindow::on_comboBox_scruve_type_currentIndexChanged(int index)
+{
+    //! Swap velocity values to avoid impossible situation.
+    double vo=ui->doubleSpinBox_velocity_start->value();
+    double ve=ui->doubleSpinBox_velocity_end->value();
+    ui->doubleSpinBox_velocity_start->setValue(ve);
+    ui->doubleSpinBox_velocity_end->setValue(vo);
+}
 
+void MainWindow::on_doubleSpinBox_lin_velocity_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_show_lin_curve_pressed();
+}
 
+void MainWindow::on_doubleSpinBox_lin_displacment_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_show_lin_curve_pressed();
+}
+
+void MainWindow::on_doubleSpinBox_mb_velocity_start_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_create_motion_block_pressed();
+}
+
+void MainWindow::on_doubleSpinBox_mb_velocity_end_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_create_motion_block_pressed();
+}
+
+void MainWindow::on_doubleSpinBox_mb_velocity_max_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_create_motion_block_pressed();
+}
+
+void MainWindow::on_doubleSpinBox_mb_acc_max_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_create_motion_block_pressed();
+}
+
+void MainWindow::on_doubleSpinBox_mb_acc_begin_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_create_motion_block_pressed();
+}
+
+void MainWindow::on_doubleSpinBox_mb_acc_end_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_create_motion_block_pressed();
+}
+
+void MainWindow::on_doubleSpinBox_mb_pathlenght_valueChanged(double arg1)
+{
+    OpencascadeWidget->Remove_all();
+    on_pushButton_create_motion_block_pressed();
+}
+
+void MainWindow::on_pushButton_show_acc_dcc_curve_pressed()
+{
+
+}
+
+void MainWindow::on_pushButton_show_lin_curve_pressed()
+{
+
+}
