@@ -14,11 +14,11 @@ Its shape is governed by the motion conditions at the start and end of the trans
 An S-curve with an intermediate constant acceleration (lineair portion) is often used to reduce the time to make large speed changes. The jerk can be
 used to determine how much of the rise or fall period can be made under constant acceleration.
 
-Motion starting with a negative begin acceleration.
+Motion starting with a negative begin acceleration. This is a exotic example how complex the velocity transition can be:
 
 ![scurve_example](https://user-images.githubusercontent.com/44880102/147381940-9394686b-a1be-40a1-8397-6f017c47851b.jpg)
 
-Controlled stop from a positive acceleration begin value.
+Controlled stop from a positive acceleration begin value. 
 
 ![scurve_example1](https://user-images.githubusercontent.com/44880102/147382103-aee03e89-9b9b-43ab-afc1-1d2318cb66f8.jpg)
 
@@ -35,6 +35,54 @@ Implementation:
 - Lineair stage.
 - Scientific papers included.
 
+- Functions:
+
+        //! Inputs:
+        //! at_time=request displacment at a certain time stamp.
+        //! vs=velocity max.
+        //! cs=curve displacement
+        RESULT scurve_lineair(double at_time, double vs, double cs);
+
+        //! Inputs:
+        //! sct=scurve type [0=acc, 1=dcc]
+        //! vo=velocity start
+        //! vs=velocity max
+        //! ve=velocity end
+        //! am=acceleration max
+        //! acs=acceleration start
+        //! ace=acceleration end
+        //! Results:
+        //! at_time=request curve at [t]
+        RESULT scurve_acc_dcc(int sct, double vo, double ve, double am, double acs, double ace, double at_time);
+
+        //! Inputs:
+        //! vs=velocity max.
+        //! am=acceleration max.
+        //! vo=velocity begin.
+        //! acs=acceleration begin.
+        //! ltot=pathlenght.
+        //! ve=velocity end.
+        //! ace=acceleration end.
+        //! at_time=curve request at time [t]
+        RESULT motion(double vs, double am, double vo, double acs, double ltot, double ve, double ace, double at_time);
+
+- Result:
+
+        struct RESULT{
+            //! Displacement result.
+            double sr=0;
+            //! Velocity result.
+            double vr=0;
+            //! Acceleration result.
+            double ar=0;
+            //! Curve time.
+            double ct=0;
+            //! Curve displacment.
+            double cs=0;
+            //! Error.
+            bool error=0;
+        };    
+
 Build in Logic:
 
 - If maximum velocity can not be reached for a motion, curves are sampled to fit.
@@ -47,8 +95,6 @@ Performance:
 Graphic implementation:
 
     ~/gui_project/motion/
-    
-![scurvemotion](https://user-images.githubusercontent.com/44880102/147080009-f6e50645-2be6-46e6-a253-6fbf8488c1de.jpg)
 
 To use the opencascade graphics along with the gui project, follow these instructions : https://github.com/grotius-cnc/oce/releases/tag/1.0.1
 
