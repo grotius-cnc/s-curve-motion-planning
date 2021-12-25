@@ -50,8 +50,12 @@ void MainWindow::on_pushButton_create_motion_block_pressed(){
     //! A motion.
     bool ok=1;
     while(ok){
-
+        auto start = std::chrono::high_resolution_clock::now();
         RESULT r=motion(vs, am, vo, acs, ltot, ve, ace, t);
+        auto stop = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start);
+        std::cout << "Time taken by function nanoseconds : ~" << duration.count() << " milliseconds: ~" << duration.count()*0.000001 <<std::endl;
+
         t+=0.1;
         if(t>=r.ct){
             ok=0;
@@ -139,7 +143,7 @@ MainWindow::RESULT MainWindow::motion(double vs, double am, double vo, double ac
         }
 
         r.ct=ct;
-        std::cout<<"mode 1"<<std::endl;
+        // std::cout<<"mode 1"<<std::endl;
         return r;
     }
 
@@ -167,7 +171,7 @@ MainWindow::RESULT MainWindow::motion(double vs, double am, double vo, double ac
         std::cout<<"ttot:"<<a.ct+b.ct+c.ct<<std::endl;*/
 
         if(lb<0){
-            std::cout<<"lin stage<0!"<<std::endl;
+            // std::cout<<"lin stage<0!"<<std::endl;
             //! Sample curve to fit ltot.
             while(a.cs+c.cs>ltot){
                 vs-=0.1;
@@ -199,7 +203,7 @@ MainWindow::RESULT MainWindow::motion(double vs, double am, double vo, double ac
 
         }
         r.ct=ct;
-        std::cout<<"mode 2"<<std::endl;
+        // std::cout<<"mode 2"<<std::endl;
         return r;
     }
 
@@ -230,7 +234,7 @@ MainWindow::RESULT MainWindow::motion(double vs, double am, double vo, double ac
         std::cout<<"ttot:"<<a.ct+b.ct+c.ct+d.ct<<std::endl;*/
 
         if(lc<0){
-            std::cout<<"lin stage<0!"<<std::endl;
+            // std::cout<<"lin stage<0!"<<std::endl;
             //! Sample curve to fit ltot.
             while(a.cs+b.cs+d.cs>ltot){
                 vs-=0.1;
@@ -270,7 +274,7 @@ MainWindow::RESULT MainWindow::motion(double vs, double am, double vo, double ac
             r.sr+=c.cs;
         }
         r.ct=ct;
-        std::cout<<"mode 3"<<std::endl;
+        // std::cout<<"mode 3"<<std::endl;
         return r;
     }
 
@@ -471,12 +475,12 @@ MainWindow::RESULT MainWindow::scurve_lineair(double at_time, double vs, double 
     r.vr=vs;                    //! Velocity result = Velocity max.
 
     if(r.ct<0){
-        std::cout<<"lineair curve time <0"<<std::endl;
-        //return 1;
+        // std::cout<<"lineair curve time <0"<<std::endl;
+        // return 1;
     }
     if(r.sr<0){
-        std::cout<<"lineair curve displacment <0"<<std::endl;
-        //return 1;
+        // std::cout<<"lineair curve displacment <0"<<std::endl;
+        // return 1;
     }
 
     return r;
