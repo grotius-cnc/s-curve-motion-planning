@@ -14,7 +14,7 @@ Its shape is governed by the motion conditions at the start and end of the trans
 An S-curve with an intermediate constant acceleration (lineair portion) is often used to reduce the time to make large speed changes. The jerk can be
 used to determine how much of the rise or fall period can be made under constant acceleration.
 
-Implementation:
+## Implementation:
 
 - Velocity up s-curve [acc period].
 - Velocity down s-curve [dcc period].
@@ -26,7 +26,7 @@ Implementation:
 - Lineair stage.
 - Scientific papers included.
 
-Functions:
+## Functions:
 
         //! Inputs:
         //! at_time=request displacment at a certain time stamp.
@@ -57,7 +57,7 @@ Functions:
         //! at_time=curve request at time [t]
         RESULT motion(double vs, double am, double vo, double acs, double ltot, double ve, double ace, double at_time);
 
-Result:
+## Result:
 
         struct RESULT{
             //! Displacement result.
@@ -74,16 +74,16 @@ Result:
             bool error=0;
         };    
 
-Build in Logic:
+## Build in Logic:
 
 - If maximum velocity can not be reached for a motion, curves are sampled to fit.
 - Debug information when input values are out of scope.
 
-Performance:
+## Performance:
 
     Time taken by function nanoseconds: ~1955 milliseconds: ~0.002
 
-Graphic implementation:
+## Graphics
 
     ~/gui_project/motion/
     
@@ -95,9 +95,8 @@ Controlled stop from a positive acceleration begin value.
 
 ![scurve_example1](https://user-images.githubusercontent.com/44880102/147382103-aee03e89-9b9b-43ab-afc1-1d2318cb66f8.jpg)
 
-
-
-To use the opencascade graphics along with the gui project, follow these instructions : https://github.com/grotius-cnc/oce/releases/tag/1.0.1
+To use the opencascade graphics along with the gui project, follow these instructions : 
+https://github.com/grotius-cnc/oce/releases/tag/1.0.1
 
 ## Summary
 Constant jerk S-curves are used to transition robot moves. The S-curve is used to eliminate discontinuities in acceleration that are detrimental
