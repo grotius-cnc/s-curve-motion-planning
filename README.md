@@ -78,6 +78,7 @@ used to determine how much of the rise or fall period can be made under constant
 
 - If maximum velocity can not be reached for a motion, curves are sampled to fit.
 - Debug information when input values are out of scope.
+- In the /gui_project is a simple path planner example.
 
 ## Performance:
 
@@ -87,13 +88,7 @@ used to determine how much of the rise or fall period can be made under constant
 
     ~/gui_project/motion/
     
-Motion starting with a negative begin acceleration. This is a exotic example how complex the velocity transition can be:
-
-![scurve_example](https://user-images.githubusercontent.com/44880102/147381940-9394686b-a1be-40a1-8397-6f017c47851b.jpg)
-
-Controlled stop from a positive acceleration begin value. 
-
-![scurve_example1](https://user-images.githubusercontent.com/44880102/147382103-aee03e89-9b9b-43ab-afc1-1d2318cb66f8.jpg)
+![scurve_example2](https://user-images.githubusercontent.com/44880102/147384849-678131e3-c85a-467c-847b-0b81ac620250.jpg)
 
 To use the opencascade graphics along with the gui project, follow these instructions : 
 https://github.com/grotius-cnc/oce/releases/tag/1.0.1
