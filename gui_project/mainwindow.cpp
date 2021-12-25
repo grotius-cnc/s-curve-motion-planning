@@ -21,6 +21,176 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+/*
+struct CONTROL{
+    //! Maximum velocity - or +
+    double vs=0;
+    //! Velocity overide 0-100%
+    double vso=0;
+    //! Maximum acceleration
+    double am=0;
+};
+
+struct PATH{
+    //! Maximum velocity.
+    double vs=0;
+    //! Velocity begin.
+    double vo=0;
+    //! Acceleration start.
+    double acs=0;
+    //! Path lenght.
+    double ltot=0;
+    //! Velocity end.
+    double ve=0;
+    //! Acceleration end.
+    double ace=0;
+    //! Distance to go.
+    double dtg=0;
+};
+std::vector<PATH> pathvec;
+*/
+
+void MainWindow::on_pushButton_simulate_path_pressed()
+{
+    OpencascadeWidget->Remove_all();
+    simulate();
+}
+
+void MainWindow::simulate(){
+
+    CONTROL c;
+    c.vs=10;
+    c.vso=0;
+    c.am=2;
+    c.i_time=0.01;
+    c.tr_time=0;
+
+    std::vector<PATH> pathvec;
+    PATH p;
+    //! A Path
+    p.vs=5;
+    p.vo=0;
+    p.ve=4;
+    p.acs=0;
+    p.ace=0;
+    p.ltot=50;
+    pathvec.push_back(p);
+
+    //! A Path
+    p.vs=12;
+    p.vo=4;
+    p.ve=0;
+    p.acs=0;
+    p.ace=0;
+    p.ltot=50;
+    pathvec.push_back(p);
+
+    //! A Path
+    p.vs=8;
+    p.vo=0;
+    p.ve=0;
+    p.acs=0;
+    p.ace=0;
+    p.ltot=75;
+    pathvec.push_back(p);
+
+    //! A Path
+    p.vs=12;
+    p.vo=0;
+    p.ve=8;
+    p.acs=0;
+    p.ace=0;
+    p.ltot=50;
+    pathvec.push_back(p);
+
+    //! A Path
+    p.vs=12;
+    p.vo=8;
+    p.ve=8;
+    p.acs=0;
+    p.ace=0;
+    p.ltot=50;
+    pathvec.push_back(p);
+
+    //! A Path (instand stop)
+    p.vs=0;
+    p.vo=8;
+    p.ve=0;
+    p.acs=0;
+    p.ace=0;
+    p.ltot=200;
+    pathvec.push_back(p);
+
+    runner(c,pathvec);
+}
+
+void MainWindow::runner(CONTROL c,std::vector<PATH> pathvec){
+
+    std::cout.precision(3);
+    Handle(AIS_Shape) awire;
+    std::vector<gp_Pnt> pvec_v, pvec_s, pvec_a;
+    for(unsigned int i=0; i<pathvec.size(); i++){
+
+        PATH p;
+        p=pathvec.at(i);
+
+        std::cout<<std::fixed<<"Path:"<<i<<std::endl;
+
+        //! Initialize a path.
+        double vs=pathvec.at(i).vs;
+        double am=c.am;
+        double vo=pathvec.at(i).vo;
+        double acs=pathvec.at(i).acs;
+        double ltot=pathvec.at(i).ltot;
+        double ve=pathvec.at(i).ve;
+        double ace=pathvec.at(i).ace;
+        double at_time=0;
+        RESULT r=motion(vs, am, vo, acs, ltot, ve, ace, at_time);
+
+         double s0=0,s1=0,s2=0;;
+
+        //! Run the path.
+        for(double j=0; j<=r.ct; j+=c.i_time){
+
+            r=motion(vs, am, vo, acs, ltot, ve, ace, j);
+
+            p.dtg=ltot-r.sr;
+            s1=r.sr;
+            s2=s1-s0;
+            s0=s1;
+            std::cout<<std::fixed<<"at_time:"<<j<<" sr:"<<r.sr<<" vr:"<<r.vr<<" ar:"<<r.ar<<" ct:"<<r.ct<<" dtg:"<<p.dtg<<std::endl;
+
+            c.tr_time+=c.i_time;
+            c.tr_s+=(s2*0.05/*scale*/);
+
+            if(!r.error){
+                pvec_v.push_back({c.tr_time,r.vr,0});
+                pvec_s.push_back({c.tr_time,c.tr_s/*scale*/,0});
+                pvec_a.push_back({c.tr_time,r.ar,0});
+            }
+        }
+    }
+    std::cout<<std::fixed<<"traject_time:"<<c.tr_time<<std::endl;
+
+    //! Draw results:
+    if(pvec_v.size()>0){
+        awire=draw_primitives().draw_3d_line_wire(pvec_v);
+        awire=draw_primitives().colorize(awire,Quantity_NOC_BLACK,0);
+        OpencascadeWidget->show_shape(awire);
+    }
+    if(pvec_s.size()>0){
+        awire=draw_primitives().draw_3d_line_wire(pvec_s);
+        awire=draw_primitives().colorize(awire,Quantity_NOC_BLUE,0);
+        OpencascadeWidget->show_shape(awire);
+    }
+    if(pvec_a.size()>0){
+        awire=draw_primitives().draw_3d_line_wire(pvec_a);
+        awire=draw_primitives().colorize(awire,Quantity_NOC_RED,0);
+        OpencascadeWidget->show_shape(awire);
+
+        OpencascadeWidget->Redraw();
+    }
+}
 
 void MainWindow::on_pushButton_create_motion_block_pressed(){
     std::cout.precision(3);
@@ -603,3 +773,5 @@ void MainWindow::on_pushButton_show_lin_curve_pressed()
 {
 
 }
+
+
