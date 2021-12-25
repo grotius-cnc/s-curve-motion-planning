@@ -81,7 +81,7 @@ Build in Logic:
 
 Performance:
 
-    Time taken by function nanoseconds: 1955 milliseconds: 0.002
+    Time taken by function nanoseconds: ~1955 milliseconds: ~0.002
 
 Graphic implementation:
 
