@@ -81,7 +81,7 @@ Build in Logic:
 
 Performance:
 
-    Time taken to calculate a motion nanoseconds: ~1500 ~4051 
+    Time taken by function nanoseconds: 1955 milliseconds: 0.002
 
 Graphic implementation:
 
